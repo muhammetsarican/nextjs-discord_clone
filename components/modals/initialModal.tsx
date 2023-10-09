@@ -65,7 +65,6 @@ export const InitialModal = () => {
 
   if (!isMounted) return null;
   return (
-    <div>
       <Dialog open>
         <DialogContent className={"bg-white text-black"}>
           <DialogHeader className="pt-8 px-6">
@@ -133,6 +132,5 @@ export const InitialModal = () => {
           </Form>
         </DialogContent>
       </Dialog>
-    </div>
   );
 };
