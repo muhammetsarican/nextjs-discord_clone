@@ -2,7 +2,6 @@
 
 import {
   Dialog,
-  DialogTrigger,
   DialogContent,
   DialogHeader,
   DialogFooter,
@@ -60,7 +59,7 @@ export const EditServerModal = () => {
   const router = useRouter();
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
-      const response = await axios.patch(`/api/servers/${server?.id}`, values);
+      await axios.patch(`/api/servers/${server?.id}`, values);
       form.reset();
       router.refresh();
       onClose();

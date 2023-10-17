@@ -2,7 +2,6 @@
 
 import {
   Dialog,
-  DialogTrigger,
   DialogContent,
   DialogHeader,
   DialogFooter,
@@ -51,7 +50,7 @@ export const CreateServerModal = () => {
   const router = useRouter();
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
-      const response = await axios.post("/api/servers", values);
+      await axios.post("/api/servers", values);
       form.reset();
       router.refresh();
       onClose();

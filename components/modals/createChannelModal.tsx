@@ -2,12 +2,10 @@
 
 import {
   Dialog,
-  DialogTrigger,
   DialogContent,
   DialogHeader,
   DialogFooter,
   DialogTitle,
-  DialogDescription,
 } from "@/components/ui/dialog";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
@@ -22,7 +20,6 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { FileUpload } from "@/components/fileUpload";
 import axios from "axios";
 import { useParams, useRouter } from "next/navigation";
 import { useModal } from "@/hooks/useModalStore";
