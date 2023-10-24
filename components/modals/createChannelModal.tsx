@@ -26,9 +26,12 @@ import { useModal } from "@/hooks/useModalStore";
 import { ChannelType } from "@prisma/client";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
 import qs from "query-string";
+import { useEffect } from "react";
 
 export const CreateChannelModal = () => {
-  const { isOpen, onClose, type } = useModal();
+  const { isOpen, onClose, type, data } = useModal();
+  const {channelType}=data;
+
   const formSchema = z.object({
     name: z.string().min(1, {
       message: "Channel name is required and must be at least 1 character!",
@@ -44,7 +47,7 @@ export const CreateChannelModal = () => {
     resolver: zodResolver(formSchema),
     defaultValues: {
       name: "",
-      type: ChannelType.TEXT,
+      type: channelType || ChannelType.TEXT,
     },
   });
 
@@ -52,14 +55,14 @@ export const CreateChannelModal = () => {
   const isModalOpen = isOpen && type === "createChannel";
 
   const router = useRouter();
-  const params=useParams();
+  const params = useParams();
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
       const url = qs.stringifyUrl({
-        url:"/api/channels",
-        query:{
-          serverId:params?.serverId
+        url: "/api/channels",
+        query: {
+          serverId: params?.serverId
         }
       })
       const response = await axios.post(url, values);
@@ -75,6 +78,11 @@ export const CreateChannelModal = () => {
     form.reset();
     onClose();
   };
+
+  useEffect(() => {
+if(channelType) form.setValue("type", channelType)
+else form.setValue("type", ChannelType.TEXT)
+  }, [channelType, form])
 
   return (
     <Dialog open={isModalOpen} onOpenChange={handleClose}>
@@ -125,7 +133,7 @@ export const CreateChannelModal = () => {
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
-                        {Object.values(ChannelType).map((type)=>(
+                        {Object.values(ChannelType).map((type) => (
                           <SelectItem key={type} value={type} className="capitalize">
                             {type.toLowerCase()}
                           </SelectItem>
