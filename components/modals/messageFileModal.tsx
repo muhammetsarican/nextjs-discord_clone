@@ -51,17 +51,17 @@ export const MessageFileModal = () => {
 
   const router = useRouter();
 
-  const {apiUrl, query}=data;
+  const { apiUrl, query } = data;
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
       const url = qs.stringifyUrl({
-        url:apiUrl || "",
+        url: apiUrl || "",
         query
       })
       await axios.post(url, {
-        ...values, 
-        content:values.fileUrl
+        ...values,
+        content: values.fileUrl
       });
       form.reset();
       router.refresh();
@@ -92,11 +92,11 @@ export const MessageFileModal = () => {
                   render={({ field }) => (
                     <FormItem>
                       <FormControl>
-                                                  <FileUpload
-                            endpoint="messageFile"
-                            value={field.value}
-                            onChange={field.onChange}
-                          />
+{/*                         <FileUpload
+                          endpoint="messageFile"
+                          value={field.value}
+                          onChange={field.onChange}
+                        /> */}
                       </FormControl>
                     </FormItem>
                   )}
