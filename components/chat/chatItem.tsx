@@ -17,6 +17,7 @@ import { Form, FormControl, FormField, FormItem } from "../ui/form";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { useModal } from "@/hooks/useModalStore";
+import {useRouter, useParams } from "next/navigation";
 
 interface ChatItemProps {
     id: string;
@@ -98,6 +99,15 @@ export const ChatItem = ({
 
     const {onOpen} = useModal();
 
+    const router=useRouter();
+    const params=useParams();
+
+    const onMemberClick=()=>{
+        if(member.id===currentMember.id) return;
+
+        router.push(`/servers/${params?.serverId}/conversations/${member.id}`)
+    }
+
     const fileType = fileUrl?.split(".").pop();
 
     const isAdmin = currentMember.role === MemberRole.ADMIN;
@@ -112,13 +122,13 @@ export const ChatItem = ({
 
         <div className="relative group flex items-center hover:bg-black/5 p-4 transition w-full">
             <div className="group flex gap-x-2 items-start w-full">
-                <div className="cursor-pointer hover:drop-shadow-md transition">
+                <div onClick={onMemberClick} className="cursor-pointer hover:drop-shadow-md transition">
                     <UserAvatar src={member.profile.imageUrl} />
                 </div>
                 <div className="flex flex-col w-full">
                     <div className="flex items-center gap-x-2">
                         <div className="flex items-center">
-                            <p className="font-semibold text-sm hover:underline cursor-pointer">
+                            <p onClick={onMemberClick} className="font-semibold text-sm hover:underline cursor-pointer">
                                 {member.profile.name}
                             </p>
                             <ActionTooltip label={member.role}>
